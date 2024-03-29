@@ -1,0 +1,85 @@
+<p>
+  <mat-toolbar >
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon" routerLink="/home"
+    >
+      <mat-icon >store</mat-icon>
+    </button>
+    <span class="fw-bold">Shopping Store</span>
+    <span class="example-spacer"></span>
+
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+      routerLink="/home"
+    >
+  
+      <mat-icon>home</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+      routerLink="/cart/{{userId}}"
+    > 
+      <mat-icon > shopping_cart</mat-icon>
+    </button>
+  
+    <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    class="example-icon favorite-icon" *ngIf="show"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu"  >
+    <div>
+      <button *ngIf="role" mat-menu-item  (click)="logout()">Logout</button>
+      <button *ngIf="role" mat-menu-item>Account</button>
+      <button  *ngIf="role" mat-menu-item routerLink="/checkout">CheckOut</button>
+      <button *ngIf="!role" mat-menu-item routerLink="/create-account">Sign up</button>
+  
+    </div>
+  </mat-menu>
+    <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    class="example-icon favorite-icon" *ngIf="display"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu"  >
+    <div>
+    </div>
+
+  </mat-menu>
+  <button *ngIf="role"
+  mat-icon-button
+  class="example-icon"
+  aria-label="Example icon-button with share icon"
+  routerLink="/getUsers"
+> 
+  <mat-icon *ngIf="role=='admin'">accessibility</mat-icon>
+</button>
+<button *ngIf="role"
+mat-icon-button
+class="example-icon"
+aria-label="Example icon-button with share icon"
+routerLink="/addProduct"
+> 
+<mat-icon *ngIf="role=='admin'">add</mat-icon>
+</button>
+<button *ngIf="role"
+mat-icon-button
+class="example-icon"
+aria-label="Example icon-button with share icon"
+routerLink="/getProducts"
+> 
+<mat-icon *ngIf="role=='admin'">shop</mat-icon>
+</button>
+  </mat-toolbar>
+</p>
+<router-outlet></router-outlet>

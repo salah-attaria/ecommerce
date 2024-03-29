@@ -1,0 +1,61 @@
+<div class="container my-5">
+  <div class="row align-items-md-stretch">
+    <div class="col-md-6">
+      <div class="text-bg-dark rounded-3 img_container">
+        <!-- <h2>Product Picture</h2> -->
+
+        <img
+          src="http://localhost:4800/uploads/{{ data[0].image }}"
+          height="auto"
+          width="%"
+        />
+
+        <!-- <button class="btn btn-outline-light" type="button">
+          Example button
+        </button> -->
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="h-100 p-5 bg-body-secondary border rounded-3">
+        <h2>{{ data[0].name }}</h2>
+        <strong
+          >Price: <span>${{ data[0].price }}</span>
+        </strong>
+
+        <p>
+          {{ data[0].description }}
+        </p>
+        <form>
+          <div class="qty-div">
+            <button mat-button (click)="add()"><mat-icon>add</mat-icon></button>
+            <mat-form-field class="qty-input" appearance="outline">
+              <input matInput type="text" #input value="{{ count }}" />
+
+              <!-- <input
+                matInput
+                type="text"
+                [(ngModel)]="(count)"
+                name="count"
+                value="{{ count }}"
+              /> -->
+            </mat-form-field>
+            <button mat-button (click)="remove()">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
+          <button
+            mat-button
+            class="btn-cart"
+            type="button"
+            (click)="addToCart()"
+          >
+            Add to Cart
+          </button>
+          <mat-error *ngIf="alert && !untouched"
+            >Please enter the valid quantity</mat-error
+          >
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

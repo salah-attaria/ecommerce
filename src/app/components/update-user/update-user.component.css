@@ -1,0 +1,31 @@
+
+.my-inputs{
+    width:450px
+}
+.form-div{
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 500px;
+    margin: 100px;
+    padding: 20px;
+    
+}
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+button{
+    width: 450px;
+    background-color: #3F51B5;
+    color: white !important;
+}
+.smart-div{
+    display: flex;
+    justify-content: space-between;
+    width:450px
+}
+a{
+    text-decoration: none;
+    margin: 6px 0;
+}

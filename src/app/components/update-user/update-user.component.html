@@ -1,0 +1,67 @@
+<div *ngIf="register" class="alert alert-success" role="alert">
+    Updated successfully
+    </div>
+    <div class="container">
+      <div class="form-div">
+        
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+        Something went wrong
+        </div>
+        <h2 class="text-center"><strong>Update User</strong></h2>
+        <form class="login_form" [formGroup]="updateForm">
+            <mat-form-field appearance="outline" class="my-inputs">
+                <mat-label>ID</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  name="_id"
+                  formControlName="_id"
+                  readonly
+                />
+               
+              </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              type="text"
+              name="firstName"
+              formControlName="firstName"
+            />
+            <mat-error *ngIf="updateForm.hasError('required', 'firstName')"
+              >First Name is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" formControlName="lastName" />
+            <mat-error *ngIf="updateForm.hasError('required', 'lastName')"
+              >Last Name is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" />
+            <mat-error *ngIf="updateForm.hasError('required', 'email')"
+              >Email is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" readonly  />
+             
+         </mat-form-field>
+          <mat-radio-group formControlName="role" aria-label="Select role">
+            <mat-radio-button value="admin"
+              ><span class="">Admin</span>
+            </mat-radio-button>
+            <mat-radio-button value="user"
+              ><span class="">User</span>
+            </mat-radio-button>
+          </mat-radio-group>
+          <button mat-button (click)="update()">Save</button>
+        </form>
+        
+      </div>
+    </div>
+    

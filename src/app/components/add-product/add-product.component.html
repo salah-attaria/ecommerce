@@ -1,0 +1,74 @@
+<div *ngIf="register" class="alert alert-success" role="alert">
+  Product Added successfully
+</div>
+<div class="container">
+  <div class="form-div">
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      Something went wrong.Please try again
+    </div>
+    <div *ngIf="errormsg" class="alert alert-danger" role="alert">
+      Please enter the required fields.
+    </div>
+    <h2 class="text-center"><strong>Add new product</strong></h2>
+    <form
+      class="login_form"
+      [formGroup]="addProductForm"
+      enctype="multipart/form-data"
+    >
+      <!-- <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Product ID</mat-label>
+        <input
+          matInput
+          type="text"
+          name="_id"
+          formControlName="_id"
+        />
+      </mat-form-field> -->
+
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Product Name</mat-label>
+        <input matInput type="text" name="name" formControlName="name" />
+        <mat-error *ngIf="addProductForm.hasError('required', 'name')"
+          >Product Name is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Description</mat-label>
+        <input matInput type="text" formControlName="description" />
+        <mat-error *ngIf="addProductForm.hasError('required', 'description')"
+          >Description is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Price</mat-label>
+        <input matInput type="email" formControlName="price" />
+        <mat-error *ngIf="addProductForm.hasError('required', 'price')"
+          >Price is required!</mat-error
+        >
+      </mat-form-field>
+
+      <div class="mb-2">
+        <button
+          type="button"
+          class="addBtn"
+          mat-raised-button
+          (click)="fileInput.click()"
+        >
+          Choose File
+        </button>
+        <input
+          hidden
+          name="image"
+          (change)="onFileSelected($event)"
+          #fileInput
+          type="file"
+        />
+        <br />
+        <span class="file-name">{{ fileName }}</span>
+        <br />
+      </div>
+
+      <button mat-button (click)="addProduct()">Add Product</button>
+    </form>
+  </div>
+</div>

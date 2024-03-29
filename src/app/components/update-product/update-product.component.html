@@ -1,0 +1,67 @@
+<div *ngIf="register" class="alert alert-success" role="alert">
+    Updated successfully
+    </div>
+    <div class="container">
+      <div class="form-div">
+        
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          Something went wrong.
+        </div>
+        <h2 class="text-center"><strong>Update Product</strong></h2>
+        <form class="login_form" [formGroup]="updateProductForm">
+            <mat-form-field appearance="outline" class="my-inputs">
+                <mat-label>ID</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  name="_id"
+                  formControlName="_id"
+                  readonly
+                />
+               
+              </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>Product Name</mat-label>
+            <input
+              matInput
+              type="text"
+              name="name"
+              formControlName="name"
+            />
+            <mat-error *ngIf="updateProductForm.hasError('required', 'name')"
+              >Name is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" formControlName="description"/>
+            <mat-error *ngIf="updateProductForm.hasError('required', 'description')"
+              >Description is required!</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="my-inputs">
+            <mat-label>Price</mat-label>
+            <input matInput type="price" formControlName="price" />
+            <mat-error *ngIf="updateProductForm.hasError('required', 'price')"
+              >Price is required!</mat-error
+            >
+          </mat-form-field>
+          <button type="button" class="addBtn" mat-raised-button style="background-color: #D7E3FF;" (click)="fileInput.click()">
+            Choose File
+          </button>
+          <input
+            hidden
+           name="image"
+            (change)="onFileSelected($event)"
+            #fileInput 
+            type="file"
+          />
+          <br>
+          <span  class="file-name">{{ fileName ? fileName : image }}</span>
+        <br>
+          <button mat-button (click)="update()">Save</button>
+        </form>
+        
+      </div>
+    </div>
+    

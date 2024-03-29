@@ -1,0 +1,37 @@
+.qty-input {
+  width: 100px !important;
+  /* height: 30px !important; */
+  border-radius: none !important;
+}
+.qty-div > button {
+  height: 60px;
+}
+.qty-input > input {
+  border-radius: none !important;
+}
+.btn-cart {
+  /* width: 300px; */
+  width: 60%;
+  background-color: #3f51b5;
+  color: white !important;
+}
+.img_container {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url('../../../assets/PICTURES/lightpink.jpg');
+}
+
+.img_container img {
+  max-height: 100%;
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
