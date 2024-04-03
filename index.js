@@ -87,11 +87,11 @@ app.post('/register', async (req, res) => {
 // .select("-password")
 app.post('/login', async (req, res) => {
     try {
-        if (!req.body.email || !req.body.password || !req.body.role) {
+        if (!req.body.email || !req.body.password) {
             return res.status(400).send({ message: "Invalid credentials" });
         }
 
-        const user = await User.findOne({ email: req.body.email, role: req.body.role });
+        const user = await User.findOne({ email: req.body.email});
         if (!user) {
             return res.status(404).send({ message: "User not found" });
         }
@@ -290,7 +290,31 @@ app.delete('/deleteUselessItem/:id', async (req, res) => {
         req.send('failed to find')
     }
 })
+app.post('/verifyCurrentPassword',async (req,res)=>{
+    console.log(req.body)
+    let existing_user=await User.findOne({_id:req.body.id})
+    const isPasswordValid = await bcrypt.compareSync(req.body.current_password, existing_user.password);
+    if (!isPasswordValid) {
+        return res.status(400).send({ message: "Invalid password" });
+    }
+    return res.send({'password_Verified':true})
+})
 
+app.put('/change_Password',async (req,res)=>{
+    console.log(req.body)
+    let existing_user=await User.findOne({_id:req.body.id});
+    if(existing_user){
+        new_password=bcrypt.hashSync(req.body.new_password,10);
+        let updated_user_password=await User.updateOne({_id:req.body.id},{
+            $set:{
+                password:new_password
+            }
+        });
+        res.send(updated_user_password)
+    }else{
+        res.send('User does not exist')
+    }
+})
 app.delete('/deltUser/:id', async (req, res) => {
     console.log('id' + req.params.id)
     // let data=await User.findOne({_id:req.params.id});
