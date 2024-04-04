@@ -1,0 +1,249 @@
+<div class="container my-5">
+  <div *ngIf="message" class="alert alert-success" role="alert">
+   Your Order has  been placed
+  </div>
+  <div *ngIf="errorMsg" class="alert alert-danger" role="alert">
+   Please enter the required fields
+   </div>
+  <main>
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Your cart</span>
+          <span class="badge bg-primary rounded-pill">{{data.length}}</span>
+        </h4>
+        <ul class="list-group mb-3">
+          <li
+            class="list-group-item d-flex justify-content-between lh-sm"
+            *ngFor="let item of data"
+          >
+            <div>
+              <h6 class="my-0">{{ item.name }}</h6>
+              <!-- <h6 class="my-0">{{item._id}}</h6> -->
+
+              <small class="text-body-secondary">{{ item.description }}</small>
+            </div>
+            <span class="text-body-secondary"
+              >${{ item.price * item.quantity }}</span
+            >
+          </li>
+        </ul>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (USD)</span>
+            <strong>${{ getTotalPrice() }}</strong>
+          </li>
+        </ul>
+        <a
+          routerLink="/home"
+          class="btn my-2"
+          style="
+            text-decoration: none;
+            align-items: center;
+            width: 50%;
+            background-color: #3d4eae;
+            color: white !important;
+          "
+          >Continue Shopping</a
+        >
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h2 class="mb-3">Billing address</h2>
+        <form class="needs-validation" [formGroup]="checkoutForm" novalidate="">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <mat-label class="form-label">First name</mat-label>
+              <input
+                matInput
+                type="text"
+                id="firstName"
+                placeholder=""
+                class="form-control"
+                value=""
+                required=""
+                formControlName="firstName"
+              />
+            </div>
+            <div class="col-md-6">
+              <mat-label class="form-label">Last name</mat-label>
+
+              <input
+                matInput
+                type="text"
+                id="lastName"
+                placeholder=""
+                value=""
+                required=""
+                class="form-control"
+                formControlName="lastName"
+              />
+            </div>
+
+            <div class="col-12">
+              <mat-label class="form-label">Username</mat-label>
+              <div class="input-group has-validation">
+                <input
+                  matInput
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  placeholder="Username"
+                  required=""
+                  formControlName="username"
+                />
+              </div>
+            </div>
+
+            <div class="col-12">
+              <mat-label class="form-label"
+                >Email
+                <span class="text-body-secondary">(Optional)</span></mat-label
+              >
+              <input
+                matInput
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <div class="col-12">
+              <mat-label class="form-label">Address</mat-label>
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                id="address"
+                placeholder="1234 Main St"
+                required=""
+                formControlName="address"
+              />
+            </div>
+
+            <div class="col-12">
+              <mat-label class="form-label"
+                >Address 2
+                <span class="text-body-secondary">(Optional)</span></mat-label
+              >
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                id="address2"
+                placeholder="Apartment or suite"
+                formControlName="address2"
+              />
+            </div>
+
+            <div class="col-md-5">
+              <mat-label class="form-label">Country</mat-label>
+              <mat-select
+                class="form-select"
+                id="country"
+                required=""
+                formControlName="country"
+              >
+                <mat-option value="">Choose...</mat-option>
+                <mat-option value="Pakistan">Pakistan</mat-option>
+              </mat-select>
+              <div class="invalid-feedback">Please select a valid country.</div>
+            </div>
+
+            <div class="col-md-4">
+              <mat-label class="form-label">State</mat-label>
+              <mat-select
+                class="form-select"
+                id="state"
+                required=""
+                formControlName="state"
+              >
+                <mat-option value="" >Choose...</mat-option>
+                <mat-option value="Lahore">Lahore</mat-option>
+                <mat-option value="Quetta">Quetta</mat-option>
+                <mat-option value="Islamabad">Islamabad</mat-option>
+                <mat-option value="Rawalpindi">Rawalpindi</mat-option>
+              </mat-select>
+              <div class="invalid-feedback">Please provide a valid state.</div>
+            </div>
+
+            <div class="col-md-3">
+              <mat-label class="form-label">Zip</mat-label>
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                id="zip"
+                placeholder=""
+                required=""
+                formControlName="zip"
+              />
+
+              <div class="invalid-feedback">Zip code required.</div>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+       
+
+          <h4 class="mb-3">Payment</h4>
+          <mat-radio-group formControlName="payment" aria-label="Select Gender">
+            <div class="my-3">
+              <div class="form-check">
+            <mat-radio-button  value="creditCard"><span class="">Credit Card</span> </mat-radio-button>
+            <mat-radio-button  value="DebitCard"><span class="">Debit Card</span> </mat-radio-button>
+            <mat-radio-button  value="PayPal"><span class="">Pay Pal</span> </mat-radio-button>
+
+              </div>
+            </div>  
+          </mat-radio-group>
+       
+          <div class="row gy-3">
+            <div class="col-md-6">
+              <mat-label class="form-label">Name on card</mat-label>
+              <input
+                matInput
+                type="text"
+                class="form-control"
+                id="cc-name"
+                placeholder=""
+                required=""
+                formControlName="creditName"
+              />
+              <small class="text-body-secondary"
+                >Full name as displayed on card</small
+              >
+              <div class="invalid-feedback">Name on card is required</div>
+            </div>
+
+            <div class="col-md-6">
+              <mat-label class="form-label">Credit card number</mat-label>
+              <input
+                type="text"
+                matInput
+                class="form-control"
+                id="cc-number"
+                placeholder=""
+                required=""
+                formControlName="creditCardNumber"
+              />
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+          <button
+            mat-button
+            class="w-100 justify-content-center btn btn-checkout btn-md"
+            type="submit"
+            (click)="placeOrder()"
+          >
+            Continue to checkout
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

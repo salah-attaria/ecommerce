@@ -1,0 +1,64 @@
+<div *ngIf="register" class="alert alert-success" role="alert">
+Registered successfully
+</div>
+<div class="container">
+  <div class="form-div">
+    
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+      The email you provided is alredy registered
+    </div>
+    <h2 class="text-center"><strong>Create Account</strong></h2>
+    <form class="login_form" [formGroup]="signupForm">
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="firstName"
+          formControlName="firstName"
+        />
+        <mat-error *ngIf="signupForm.hasError('required', 'firstName')"
+          >First Name is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Last Name</mat-label>
+        <input matInput type="text" formControlName="lastName" />
+        <mat-error *ngIf="signupForm.hasError('required', 'lastName')"
+          >Last Name is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-error *ngIf="signupForm.hasError('required', 'email')"
+          >Email is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="signupForm.hasError('required', 'password')"
+          >Password is required!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs" hidden>
+        <input matInput type="text"id="input" formControlName="role" value="user" />
+        
+      </mat-form-field>
+      <!-- <mat-radio-group formControlName="role" aria-label="Select role" >
+        <mat-radio-button value="admin"
+          ><span class="">Admin</span>
+        </mat-radio-button>
+        <mat-radio-button value="user"
+          ><span class="">User</span>
+        </mat-radio-button>
+      </mat-radio-group> -->
+      <button mat-button (click)="signUp()">Sign Up</button>
+    </form>
+    <div class="smart-div my-2">
+      <span>Already have an account?</span>
+      <a href="/">Login</a>
+    </div>
+  </div>
+</div>

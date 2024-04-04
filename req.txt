@@ -1,0 +1,2 @@
+ npm install @mui/icons-material
+  npm i ts-node --save-dev

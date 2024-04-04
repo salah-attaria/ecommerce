@@ -1,0 +1,31 @@
+<!-- <mat-form-field>
+    <mat-label>Input</mat-label>
+    <input matInput>
+  </mat-form-field> -->
+<div class="container">
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    Invlid! User Not Found
+  </div>
+  <div class="form-div">
+    <h2 class="text-center"><strong>Login Form</strong></h2>
+    <form class="login_form" [formGroup]="loginForm">
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-error *ngIf="loginForm.hasError('required','email')">Email is required</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="loginForm.hasError('required','password')">Password is required</mat-error>
+
+      </mat-form-field>
+   
+      <button mat-button (click)="login()">Login</button>
+    </form>
+    <div class="smart-div">
+      <a routerLink="/create-account">Create account</a>
+      <a href="#">Forgot password?</a>
+    </div>
+  </div>
+</div>

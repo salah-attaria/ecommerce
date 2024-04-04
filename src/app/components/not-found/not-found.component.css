@@ -1,0 +1,29 @@
+.check{
+    background-color: #3D4EAE;
+    color: white !important;
+    text-decoration:none
+}
+.notFound_div{
+    border: 1px solid rgb(250, 241, 191);
+    background-color: rgb(250, 241, 191);
+    border-radius: 5px;
+    width:500px;
+    height: 300px;
+    padding: 60px;
+    top: 100px;
+    position: relative;
+}
+a{
+    position: relative;
+    top: 50px;
+    margin-left:100px;
+}
+.text{
+    text-shadow: #3D4EAE;
+    text-decoration-style: double !important;
+
+}
+.container{
+    align-items: center !important;
+    margin-bottom:200px ;
+}
