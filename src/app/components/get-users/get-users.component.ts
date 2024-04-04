@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { toArray } from 'rxjs';
 import { ConnectionService } from 'src/app/services/connection.service';
 import { AdminDeltDialogeComponent } from '../admin-delt-dialoge/admin-delt-dialoge.component';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-get-users',
@@ -24,7 +25,7 @@ export class GetUsersComponent implements OnInit {
   ];
   dataSource!: MatTableDataSource<any>;
   data: any;
-  constructor(private connect: ConnectionService, public dialog: MatDialog) {}
+  constructor(private connect: ConnectionService, public dialog: MatDialog,private snack :SnackbarService) {}
   ngOnInit(): void {
     this.connect.getUsers().subscribe((resp: any) => {
       console.log(resp);
@@ -57,6 +58,7 @@ export class GetUsersComponent implements OnInit {
       if (resp == 'ok') {
         this.connect.delUserById(userId).subscribe((resp: any) => {
           console.log(resp);
+          this.snack.openSnackBar('User Has Been Deleted','Info')
         });
       } else {
         (error: any) => {

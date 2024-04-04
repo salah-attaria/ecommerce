@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConnectionService } from 'src/app/services/connection.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,28 +13,26 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class LoginComponent {
   loginForm: FormGroup = this.fb.group({
-    email: new FormControl(''),
-    password: new FormControl(''),
-    role: new FormControl(''),
-
-
+    email: new FormControl('',Validators.required),
+    password: new FormControl('',Validators.required),
   });
   response: any;
   error = false;
+  private tokenSubscription!: Subscription;
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
     public router: Router,
-    private jwt: JwtHelperService
+    private jwt: JwtHelperService,
+    private snack: SnackbarService
   ) {}
   ngOnInit(): void {
-    this.login();
     // this.router.navigateByUrl('/home')
   }
 
   login() {
+    let data = this.loginForm.value;
     if (this.loginForm.valid) {
-      let data = this.loginForm.value;
       console.log(data);
       this.auth.login(data).subscribe((resp: any) => {
         console.log(resp);
@@ -41,36 +41,26 @@ export class LoginComponent {
         if (this.response.accessToken) {
           this.auth.setToken(this.response.accessToken);
           this.router.navigateByUrl('/home');
-          this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd) {
-              window.location.reload();
-            }
-          });
-          // this.router.navigateByUrl('/home');
-
-          alert('welcome');
+          this.snack.openSnackBar('Welcom to the shop', 'Success');
         } else {
-          if (this.auth.getToken() == null) {
-            this.error = true;
+          
+            this.snack.openSnackBar('Invalid credentials', 'Warning');
             this.router.navigateByUrl('/');
-          } else {
-            alert('Token expired.Again log in');
-            this.router.navigateByUrl('/');
-          }
+       
         }
       });
     } else {
-      alert('Invalid credentials');
-    }
+      this.snack.openSnackBar('Invalid credentials', 'Warning');
 
+    }
   }
   getUserId() {
     let token: any = localStorage.getItem('token');
     if (token) {
       const decodedToken = this.jwt.decodeToken(token);
       const userId = decodedToken.id;
-      const role=decodedToken.role
-      console.log(userId+role);
+      const role = decodedToken.role;
+      console.log(userId + role);
     } else {
       console.error('Token not found');
     }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   constructor(private http:HttpClient) { }
+  tokenSubject: Subject<void> = new Subject<void>();
 url="http://localhost:4800/"
   logout(){
     localStorage.removeItem('token');
@@ -20,6 +22,7 @@ url="http://localhost:4800/"
   // }
   setToken(token:string){
     localStorage.setItem('token',token);
+    this.tokenSubject.next();
   }
   getToken(){
     localStorage.getItem('token')  || '';

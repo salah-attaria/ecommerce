@@ -12,19 +12,15 @@
       <mat-form-field appearance="outline" class="my-inputs">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" />
+        <mat-error *ngIf="loginForm.hasError('required','email')">Email is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="my-inputs">
         <mat-label>Password</mat-label>
         <input matInput type="password" formControlName="password" />
+        <mat-error *ngIf="loginForm.hasError('required','password')">Password is required</mat-error>
+
       </mat-form-field>
-      <mat-radio-group formControlName="role" aria-label="Select role">
-        <mat-radio-button value="admin"
-          ><span class="">Admin</span>
-        </mat-radio-button>
-        <mat-radio-button value="user"
-          ><span class="">User</span>
-        </mat-radio-button>
-      </mat-radio-group>
+   
       <button mat-button (click)="login()">Login</button>
     </form>
     <div class="smart-div">

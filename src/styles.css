@@ -2,3 +2,31 @@
 /* @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-mdc-snack-bar-container {
+    &.red-snackbar {
+      --mdc-snackbar-container-color: #e60000!important;
+      --mat-mdc-snack-bar-button-color: white!important;
+      --mdc-snackbar-supporting-text-color: white !important;
+    }
+  }
+  .mat-mdc-snack-bar-container {
+    &.blue-snackbar {
+      --mdc-snackbar-container-color:#3F51B5!important;
+      --mat-mdc-snack-bar-button-color: white!important;
+      --mdc-snackbar-supporting-text-color: white !important;
+    }
+  }
+  .mat-mdc-snack-bar-container {
+    &.green-snackbar {
+      --mdc-snackbar-container-color: #B3C939!important;
+      --mat-mdc-snack-bar-button-color: black!important;
+      --mdc-snackbar-supporting-text-color: black !important;
+    }
+  }
+  .mat-mdc-snack-bar-container {
+    &.orange-snackbar {
+      --mdc-snackbar-container-color: #F78022!important;
+      --mat-mdc-snack-bar-button-color: black!important;
+      --mdc-snackbar-supporting-text-color: white !important;
+    }
+  }

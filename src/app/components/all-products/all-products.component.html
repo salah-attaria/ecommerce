@@ -1,7 +1,11 @@
 <div class="container my-5">
-    <div class="my-3">
-        <h1>Registered Users</h1>
+  <div class="my-3 d-flex justify-content-between" >
+    <div>
+      <h1>Registered Products</h1>
+
     </div>
+    <div><button mat-raised-button color="primary" routerLink="/addProduct">Add Product</button></div>
+  </div>
     <hr class="mb-4">
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
@@ -36,7 +40,8 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let element"> 
-                <button
+              <p>{{element._id}}</p>
+              <button
                 mat-icon-button
                 class="example-icon"
                 aria-label="Example icon-button with share icon"

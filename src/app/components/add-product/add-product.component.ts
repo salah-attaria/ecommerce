@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConnectionService } from 'src/app/services/connection.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-add-product',
@@ -33,7 +34,8 @@ export class AddProductComponent {
   constructor(
     private connect: ConnectionService,
     private fb: FormBuilder,
-    public route: Router
+    public route: Router,
+    private snack: SnackbarService
   ) {}
   ngOnInit(): void {}
   addProduct() {
@@ -50,19 +52,22 @@ export class AddProductComponent {
       this.connect.addProduct(formData).subscribe(
         (resp: any) => {
           console.log('add');
+          this.snack.openSnackBar('Product added successfuly', 'Success');
           this.register = true;
         },
 
         (error) => {
-          this.error = error;
-          console.log(this.error)
+          this.snack.openSnackBar('Something went wrong', 'Warning');
+
+          // this.error = error;
+          console.log(this.error);
 
           // Handle the error in the component
         }
       );
     } else {
-          this.errormsg = true;
-
+      // this.errormsg = true;
+      this.snack.openSnackBar('Something went wrong', 'Warning');
     }
   }
 

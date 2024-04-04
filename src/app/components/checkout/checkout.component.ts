@@ -6,6 +6,7 @@ import { map, of } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-checkout',
@@ -39,7 +40,8 @@ export class CheckoutComponent {
     public dialog: MatDialog,
     private connect: ConnectionService,
     private fb: FormBuilder,
-    private jwt:JwtHelperService
+    private jwt:JwtHelperService,
+    private snack:SnackbarService
   ) {}
   ngOnInit(): void {
     let token: any = localStorage.getItem('token');
@@ -86,7 +88,8 @@ export class CheckoutComponent {
             this.connect.deleteCartItem(userId).subscribe({
               next: () => {
                 console.log('Cart cleared successfully');
-                this.message=true;
+                // this.message=true;
+                this.snack.openSnackBar('Order Has Been Placed','Info')
                 setTimeout(() => {
                   this.router.navigateByUrl('/home')
                 }, 3000);
@@ -108,7 +111,8 @@ export class CheckoutComponent {
       });
     }else{
       console.log('invalid')
-      this.errorMsg=true;
+      this.snack.openSnackBar('Please Enter The Required Fields','Warning')
+      // this.errorMsg=true;
 
 
     }

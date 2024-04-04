@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router';
 import { ConnectionService } from 'src/app/services/connection.service';
-import { toArray } from 'rxjs';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  selector: 'app-add-admin',
+  templateUrl: './add-admin.component.html',
+  styleUrls: ['./add-admin.component.css']
 })
-export class SignupComponent implements OnInit {
+export class AddAdminComponent {
   signupForm: FormGroup = this.fb.group({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
@@ -28,7 +23,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private connect: ConnectionService,
     private fb: FormBuilder,
-    public route: Router
+    public route: Router,
+    private snack:SnackbarService
   ) {}
   ngOnInit(): void {}
   signUp() {
@@ -44,10 +40,11 @@ export class SignupComponent implements OnInit {
       this.connect.postSignUpData(data).subscribe({
         next: () => {
           console.log('successfully');
+          this.snack.openSnackBar('New Admin added successfully','Info')
           this.register = true;
 
           setTimeout(() => {
-            this.route.navigateByUrl('/');
+            this.route.navigateByUrl('/getUsers');
           }, 3000);
           // alert('Registered successfully');
         },
@@ -59,9 +56,14 @@ export class SignupComponent implements OnInit {
       });
     } else {
       // alert('Please enter the required fields')
+      this.snack.openSnackBar('Please enter the required fields','Warning')
       console.log(console.error());
     }
   }
+  goBack(){
+  window.history.back()
+  }
   // let result=JSON.stringify(resp)
   // localStorage.setItem('user',result)
+
 }

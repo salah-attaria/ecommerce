@@ -6,11 +6,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConnectionService } from 'src/app/services/connection.service';
 import { AdminDeltDialogeComponent } from '../admin-delt-dialoge/admin-delt-dialoge.component';
 import { DeltProductDialogComponent } from '../delt-product-dialog/delt-product-dialog.component';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-all-products',
   templateUrl: './all-products.component.html',
-  styleUrls: ['./all-products.component.css']
+  styleUrls: ['./all-products.component.css'],
 })
 export class AllProductsComponent {
   displayedColumns: string[] = [
@@ -23,12 +24,17 @@ export class AllProductsComponent {
   ];
   dataSource!: MatTableDataSource<any>;
   data: any;
-  constructor(private connect: ConnectionService, public dialog: MatDialog) {}
+  constructor(
+    private connect: ConnectionService,
+    public dialog: MatDialog,
+    private snack: SnackbarService
+  ) {}
   ngOnInit(): void {
     this.connect.getData().subscribe((resp: any) => {
       console.log(resp);
       this.data = resp.map((item: any) => {
         return {
+          id:item._id,
           image: item.image,
           name: item.name,
           description: item.description,
@@ -50,13 +56,14 @@ export class AllProductsComponent {
     const dialogRef = this.dialog.open(DeltProductDialogComponent, {
       height: '300px',
       width: '500px',
-      data:productId
+      data: productId,
     });
     dialogRef.afterClosed().subscribe((resp) => {
       if (resp == 'ok') {
         this.connect.deltProductById(productId).subscribe((resp: any) => {
           console.log(resp);
-          this.dataSource
+          this.snack.openSnackBar('Producted has  been deleted', 'Success');
+          this.dataSource;
         });
       } else {
         (error: any) => {
@@ -79,5 +86,3 @@ export class AllProductsComponent {
     }
   }
 }
-
-

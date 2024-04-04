@@ -15,6 +15,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AllProductsComponent } from './components/all-products/all-products.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
+import { AddAdminComponent } from './components/add-admin/add-admin.component';
+import { AccountPasswordComponent } from './components/account-password/account-password.component';
 
 const routes: Routes = [
   { component: LoginComponent, path: '' },
@@ -37,6 +39,13 @@ const routes: Routes = [
     canActivate: [authGuard, verificationGuard],
 
     path: 'checkout',
+    data: ['admin','user'],
+  },
+  {
+    component: AccountPasswordComponent,
+    canActivate: [authGuard, verificationGuard],
+
+    path: 'change_password',
     data: ['admin','user'],
   },
   {
@@ -79,6 +88,13 @@ const routes: Routes = [
     canActivate: [authGuard, verificationGuard],
 
     path: 'addProduct',
+    data: ['admin'],
+  },
+  {
+    component: AddAdminComponent,
+    canActivate: [authGuard, verificationGuard],
+
+    path: 'addAdmin',
     data: ['admin'],
   },
   {

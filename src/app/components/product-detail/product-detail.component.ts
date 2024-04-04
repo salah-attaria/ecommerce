@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { fromEvent } from 'rxjs';
 import { ConnectionService } from 'src/app/services/connection.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -30,7 +31,8 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     public router: Router,
     private jwt: JwtHelperService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snack:SnackbarService
   ) {}
   @ViewChild('input') input!: ElementRef;
   ngOnInit(): void {
@@ -73,16 +75,7 @@ export class ProductDetailComponent implements OnInit {
     this.addToCart();
     
   }
-  // getUserId() {
-  //   let token: any = localStorage.getItem('token');
-  //   if (token) {
-  //     const decodedToken = this.jwt.decodeToken(token);
-  //     const userId = decodedToken.id;
-  //     console.log(userId);
-  //   } else {
-  //     console.error('Token not found');
-  //   }
-  // }
+ 
   addToCart() {
     this.quantity = this.input.nativeElement.value;
     console.log(this.quantity);
@@ -101,6 +94,7 @@ export class ProductDetailComponent implements OnInit {
       // console.log(orderData);
       this.connect.postCartData(orderData).subscribe((res) => {
         console.log(orderData);
+        this.snack.openSnackBar('Product Added To Cart Successfully','Info')
         this.input.nativeElement.value=0
       });
     }

@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConnectionService } from 'src/app/services/connection.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-update-user',
@@ -29,7 +30,8 @@ export class UpdateUserComponent {
     private connect: ConnectionService,
     private fb: FormBuilder,
     public route: Router,
-    private router:ActivatedRoute
+    private router:ActivatedRoute,
+    private snack:SnackbarService
   ) {}
   ngOnInit(): void {
     this.router.params.subscribe((params:any)=>{
@@ -58,24 +60,22 @@ export class UpdateUserComponent {
       this.connect.updateData(data).subscribe({
         next: () => {
           console.log('updated successfully');
-          // if (this.updateForm.get('password')?.dirty) {
-          //   // If the password field is dirty (meaning it's been changed), handle password update separately
-          //   this.updatePassword();
-          this.register = true;}
-
-          // setTimeout(() => {
-          //   this.route.navigateByUrl('/getUsers');
-          // }, 3000);
-        // }
+        this.snack.openSnackBar('User updated','Info')
+          setTimeout(() => {
+            this.route.navigateByUrl('/getUsers');
+          }, 3000);
+        }
         ,
         error: (error: any) => {
           console.log(error);
-          this.error = true;
+          
         },
       }
       );
     } else {
       console.log(console.error());
+      this.snack.openSnackBar('Something went wrong','Warning')
+
     }
   // }
   // updatePassword(){

@@ -42,14 +42,18 @@ Registered successfully
           >Password is required!</mat-error
         >
       </mat-form-field>
-      <mat-radio-group formControlName="role" aria-label="Select role">
+      <mat-form-field appearance="outline" class="my-inputs" hidden>
+        <input matInput type="text"id="input" formControlName="role" value="user" />
+        
+      </mat-form-field>
+      <!-- <mat-radio-group formControlName="role" aria-label="Select role" >
         <mat-radio-button value="admin"
           ><span class="">Admin</span>
         </mat-radio-button>
         <mat-radio-button value="user"
           ><span class="">User</span>
         </mat-radio-button>
-      </mat-radio-group>
+      </mat-radio-group> -->
       <button mat-button (click)="signUp()">Sign Up</button>
     </form>
     <div class="smart-div my-2">

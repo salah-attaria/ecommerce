@@ -39,6 +39,12 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { AllProductsComponent } from './components/all-products/all-products.component';
 import { DeltProductDialogComponent } from './components/delt-product-dialog/delt-product-dialog.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
+import { AddAdminComponent } from './components/add-admin/add-admin.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { AccountPasswordComponent } from './components/account-password/account-password.component';
+import {MatStepperModule} from '@angular/material/stepper';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +67,9 @@ import { UpdateProductComponent } from './components/update-product/update-produ
     AllProductsComponent,
     DeltProductDialogComponent,
     UpdateProductComponent,
+    AddAdminComponent,
+    SnackbarComponent,
+    AccountPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +89,8 @@ import { UpdateProductComponent } from './components/update-product/update-produ
     HttpClientModule,
     ReactiveFormsModule,
     MatRadioModule,
+    MatSnackBarModule, 
+    MatStepperModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

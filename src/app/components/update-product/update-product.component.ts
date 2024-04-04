@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConnectionService } from 'src/app/services/connection.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-update-product',
@@ -33,7 +34,8 @@ export class UpdateProductComponent {
     private connect: ConnectionService,
     private fb: FormBuilder,
     public route: Router,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private snack:SnackbarService
   ) {}
   ngOnInit(): void {
     this.router.params.subscribe((params: any) => {
@@ -70,25 +72,25 @@ export class UpdateProductComponent {
       this.connect.updateProductData(updateData).subscribe(resp=>{
 
         console.log('updated successfully');
+        this.snack.openSnackBar('Product has been updated','Success')
 
-        this.register = true;
       setTimeout(() => {
         this.route.navigateByUrl('/getProducts')
       },3000);
       }
       ,
         (error) => {
-          this.error = error;
+          // this.error = error;
+          this.snack.openSnackBar('Something went wrong','Warning')
           console.log(this.error);
-          setTimeout(() => {
-            window.location.reload()
-          }, 2000);
+         
 
-          // Handle the error in the component
         }
       );
     } else {
       console.log(console.error());
+      this.snack.openSnackBar('Something went wrong','Warning')
+
     }
   }
   onFileSelected(event: any): void {
