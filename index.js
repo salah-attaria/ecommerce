@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: '.env.keys' })
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose')
@@ -14,6 +16,9 @@ const order_detail = require('./db/order_detail');
 const authconfig = require('./authconfig');
 const app = express();
 const path = require('path');
+const nodemailer = require('nodemailer');
+const resetToken = require('./db/resetToken');
+const { debug } = require('console');
 app.use(cors({
     origin: ['http://localhost:4200'],
     optionsSuccessStatus: 200
@@ -54,20 +59,6 @@ app.get("/getData/:id", async (req, res) => {
 
     res.send(data)
 })
-// app.post("/upload", upload, async (req, res) => {
-//     let data=req.body
-//     // const productList = new mongoose.model("products", productSchema)
-//     // let data = await productList(req.data)
-//     res.send(data)
-// })
-// app.post('/upload', upload.array('file'), (req, res) => {
-//     if (!req.file) {
-//         return res.status(400).send('No file uploaded.');
-//     }
-//     res.send('File uploaded successfully.');
-// });
-
-
 app.post('/register', async (req, res) => {
     let existing_user = await User.findOne({ email: req.body.email, role: req.body.role })
     if (!existing_user) {
@@ -91,7 +82,7 @@ app.post('/login', async (req, res) => {
             return res.status(400).send({ message: "Invalid credentials" });
         }
 
-        const user = await User.findOne({ email: req.body.email});
+        const user = await User.findOne({ email: req.body.email });
         if (!user) {
             return res.status(404).send({ message: "User not found" });
         }
@@ -103,7 +94,7 @@ app.post('/login', async (req, res) => {
 
         const token = jwt.sign({ id: user._id, role: user.role }, authconfig.secret, {
             algorithm: 'HS256',
-            expiresIn: '30m' // Token expires in 30 minutes
+            expiresIn: '20m' // Token expires in 30 minutes
         });
 
         res.send({
@@ -210,11 +201,6 @@ app.delete('/deleteitems/:id', async (req, res) => {
     }
 })
 app.post('/addProduct', upload.single('image'), async (req, res) => {
-    // let existing_product=await products.findOne({_id:req.body.id});
-    // if(existing_product){
-    //     res.send('Product alredy exists');
-    // }else{
-
     let data = new products({
         name: req.body.name,
         price: req.body.price,
@@ -222,10 +208,10 @@ app.post('/addProduct', upload.single('image'), async (req, res) => {
         image: req.file.originalname
     })
     console.log(data);
-    if (data){
+    if (data) {
         let result = await data.save();
-    res.status(201).send(result);
-    }else{
+        res.status(201).send(result);
+    } else {
         res.send('error')
     }
 })
@@ -264,7 +250,6 @@ app.put('/updateData', async (req, res) => {
 })
 app.put('/updateProductData', upload.single('image'), async (req, res) => {
     console.log(req.body)
-    // console.log(req.file)
     let data = await products.updateOne({ _id: req.body._id }, {
         $set: {
             name: req.body.name,
@@ -290,28 +275,28 @@ app.delete('/deleteUselessItem/:id', async (req, res) => {
         req.send('failed to find')
     }
 })
-app.post('/verifyCurrentPassword',async (req,res)=>{
+app.post('/verifyCurrentPassword', async (req, res) => {
     console.log(req.body)
-    let existing_user=await User.findOne({_id:req.body.id})
+    let existing_user = await User.findOne({ _id: req.body.id })
     const isPasswordValid = await bcrypt.compareSync(req.body.current_password, existing_user.password);
     if (!isPasswordValid) {
         return res.status(400).send({ message: "Invalid password" });
     }
-    return res.send({'password_Verified':true})
+    return res.send({ 'password_Verified': true })
 })
 
-app.put('/change_Password',async (req,res)=>{
+app.put('/change_Password', async (req, res) => {
     console.log(req.body)
-    let existing_user=await User.findOne({_id:req.body.id});
-    if(existing_user){
-        new_password=bcrypt.hashSync(req.body.new_password,10);
-        let updated_user_password=await User.updateOne({_id:req.body.id},{
-            $set:{
-                password:new_password
+    let existing_user = await User.findOne({ _id: req.body.id });
+    if (existing_user) {
+        new_password = bcrypt.hashSync(req.body.new_password, 10);
+        let updated_user_password = await User.updateOne({ _id: req.body.id }, {
+            $set: {
+                password: new_password
             }
         });
         res.send(updated_user_password)
-    }else{
+    } else {
         res.send('User does not exist')
     }
 })
@@ -327,6 +312,93 @@ app.delete('/deltProduct/:id', async (req, res) => {
     let result = await products.deleteOne({ _id: req.params.id })
     res.send(result)
 })
+app.post('/forget_password', async (req, res) => {
+    const email = req.body.email
+    console.log(req.body);
+    let user = await User.findOne({ email: req.body.email })
+    if (!user) {
+        res.status(404).send({'message':false})
+    } else {
+        try {
+
+            const token = jwt.sign({ id: user._id }, process.env.reset_password_key, { expiresIn: '10m' })
+            const reset_token = new resetToken({
+                userId: user._id,
+                token: token,
+                expiration: Date.now() + 10 * 60 * 1000
+            })
+            await reset_token.save()
+            // user.resetToken = token
+            // await user.save()
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.email_password
+                }
+            })
+            const mailOptions = {
+                from: process.env.email,
+                to: email,
+                subject: 'RESET YOUR PASSWORD',
+                html: `<p>Please click <a href="http://localhost:4200/reset_password/${token}">here</a> to reset your password.</p>`
+            }
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log(error);
+                    return res.status(500).json({ message: 'Failed to send email' });
+                }
+                res.status(200).send({ 'verify_email': true });
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ 'verify_email': false });
+        }
+
+    }
+})
+
+app.get('/verify_token/:token', (req, res) => {
+    console.log('token :' + req.params.token)
+    let token = req.params.token;
+    let verified_token = jwt.verify(token, process.env.reset_password_key, (err, decoded) => {
+        if (err) {
+            return res.status(400).send({ 'token_Verified': false });
+        } else {
+            return res.status(200).send({ 'token_Verified': true });
+        }
+    })
+})
+app.post('/verify_token', async (req, res) => {
+    console.log(req.body)
+    let existing_token_user = await resetToken.findOne({ token: req.body.token })
+    console.log(existing_token_user)
+    new_password = bcrypt.hashSync(req.body.new_password, 10);
+    if (existing_token_user) {
+        // let user = await User.find({ _id: existing_token_user.userId })
+        let user = await User.updateOne({ _id: existing_token_user.userId }, {
+            $set: {
+                password: new_password
+            }
+        })
+        console.log(user)
+        res.send(user)
+    }
+
+})
+
+// ` <html>
+//             <body>
+//                 <h1>Reset Your Password</h1>
+//                 <form action="/reset-password" method="post">
+//                     <input type="hidden" name="token" value="${token}">
+//                     <label for="password">New Password:</label>
+//                     <input type="password" id="password" name="password" required>
+//                     <button type="submit">Reset Password</button>
+//                 </form>
+//             </body>
+//             </html>`
+
 app.listen(4800, (err) => {
     if (err) {
         console.log(err)
