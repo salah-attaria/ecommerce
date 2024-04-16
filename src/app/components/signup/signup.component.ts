@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ConnectionService } from 'src/app/services/connection.service';
 import { toArray } from 'rxjs';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,18 @@ export class SignupComponent implements OnInit {
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+      ),
+    ]),
+    confirm_password: new FormControl('', [
+      Validators.required,
+      Validators.pattern(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+      ),
+    ]),
     role: new FormControl('', Validators.required),
   });
   error: boolean = false;
@@ -28,7 +40,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private connect: ConnectionService,
     private fb: FormBuilder,
-    public route: Router
+    public route: Router,
+    private snack:SnackbarService
   ) {}
   ngOnInit(): void {}
   signUp() {
@@ -41,27 +54,31 @@ export class SignupComponent implements OnInit {
 
     console.log(data);
     if (this.signupForm.valid) {
-      this.connect.postSignUpData(data).subscribe({
-        next: () => {
-          console.log('successfully');
-          this.register = true;
+      if (data.password !== data.confirm_password) {
+        this.signupForm.controls['confirm_password'].setErrors({
+          mismatch: true,
+        });
+        this.snack.openSnackBar('Both fields of password should be matched','Warning')
+      } else {
+        this.connect.postSignUpData(data).subscribe({
+          next: () => {
+            console.log('successfully');
+            // this.register = true;
+            this.snack.openSnackBar('User Registered successfully','Success')
 
-          setTimeout(() => {
-            this.route.navigateByUrl('/');
-          }, 3000);
-          // alert('Registered successfully');
-        },
-        error: (error) => {
-          console.log(error);
-          // alert('email is already taken ');
-          this.error = true;
-        },
-      });
+            setTimeout(() => {
+              this.route.navigateByUrl('/');
+            }, 3000);
+          },
+          error: (error) => {
+            console.log(error);
+            this.error = true;
+          },
+        });
+      }
     } else {
-      // alert('Please enter the required fields')
       console.log(console.error());
     }
   }
-  // let result=JSON.stringify(resp)
-  // localStorage.setItem('user',result)
+ 
 }

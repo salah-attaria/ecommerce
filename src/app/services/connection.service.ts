@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { VerifyPasswordResponse } from '../components/account-password/verify_password';
+import { verifyTokenResponse } from '../components/reset-password/verify-token';
+import { verifyEmailResponse } from '../components/forget-password/verify_email';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +68,15 @@ export class ConnectionService {
   }
   changePassword(body:any):Observable<any>{
     return this.http.put(this.url+'change_Password', body)
+  }
+  forget_password(body:any){
+    return this.http.post<verifyEmailResponse>(this.url+'forget_password',body)
+  }
+  Verify_token(token:any){
+    return this.http.get<verifyTokenResponse>(this.url+'verify_token/'+token)
+  }
+  reset_password(body:any){
+    return this.http.post(this.url+'verify_token',body)
   }
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error occurred';

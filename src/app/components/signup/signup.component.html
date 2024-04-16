@@ -41,6 +41,17 @@ Registered successfully
         <mat-error *ngIf="signupForm.hasError('required', 'password')"
           >Password is required!</mat-error
         >
+        <mat-error *ngIf="signupForm.hasError('pattern','password')">Password contain min 8 ,1 uppercase,1 lowercase ,digits & symbols</mat-error>
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirm_password" />
+        <mat-error *ngIf="signupForm.hasError('required', 'confirm_password')"
+          >This field is required!</mat-error
+        >
+        <mat-error *ngIf="signupForm.hasError('pattern','confirm_password')">Password contain min 8 ,1 uppercase,1 lowercase ,digits & symbols</mat-error>
+
       </mat-form-field>
       <mat-form-field appearance="outline" class="my-inputs" hidden>
         <input matInput type="text"id="input" formControlName="role" value="user" />

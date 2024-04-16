@@ -17,6 +17,8 @@ import { AllProductsComponent } from './components/all-products/all-products.com
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { AddAdminComponent } from './components/add-admin/add-admin.component';
 import { AccountPasswordComponent } from './components/account-password/account-password.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
   { component: LoginComponent, path: '' },
@@ -49,11 +51,25 @@ const routes: Routes = [
     data: ['admin','user'],
   },
   {
+    component: ForgetPasswordComponent,
+    // canActivate: [authGuard, verificationGuard],
+
+    path: 'forget_password',
+    // data: ['admin','user'],
+  },
+  {
     component: CartComponent,
     canActivate: [authGuard, verificationGuard],
 
     path: 'cart/:userId',
     data: ['admin','user'],
+  },
+  {
+    component: ResetPasswordComponent,
+    // canActivate: [authGuard, verificationGuard],
+
+    path: 'reset_password/:token',
+    // data: ['admin','user'],
   },
   {
     component: GetUsersComponent,

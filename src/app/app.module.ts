@@ -44,6 +44,8 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { AccountPasswordComponent } from './components/account-password/account-password.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     AddAdminComponent,
     SnackbarComponent,
     AccountPasswordComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

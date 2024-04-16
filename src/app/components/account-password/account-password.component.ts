@@ -25,8 +25,8 @@ export class AccountPasswordComponent {
     id: new FormControl(null, Validators.required),
   });
   change_password_form: FormGroup = this.fb.group({
-    new_password: new FormControl('', Validators.required),
-    confirm_password: new FormControl('', Validators.required),
+    new_password: new FormControl('',[ Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]),
+    confirm_password: new FormControl('',[ Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]),
     id: new FormControl(null, Validators.required),
   });
 
@@ -100,5 +100,8 @@ export class AccountPasswordComponent {
       console.log('invalid');
       // this.snack.openSnackBar('Something went wrong', 'Warning');
     }
+  }
+  goBack(){
+    window.history.back()
   }
 }
