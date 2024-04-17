@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { OrderDialogeComponent } from '../order-dialoge/order-dialoge.component';
-import { ConnectionService } from '../../services/connection.service';
+import { ConnectionService } from '../../../services/connection.service';
 import { map, of } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';

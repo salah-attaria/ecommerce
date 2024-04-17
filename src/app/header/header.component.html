@@ -14,7 +14,7 @@
       mat-icon-button *ngIf="role"
       class="example-icon"
       aria-label="Example icon-button with share icon"
-      routerLink="/home"
+      routerLink="/lazy/home"
     >
   
       <mat-icon>home</mat-icon>
@@ -23,7 +23,7 @@
       mat-icon-button
       class="example-icon"
       aria-label="Example icon-button with share icon"
-      routerLink="/cart/{{userId}}" *ngIf="role"
+      routerLink="/lazy/cart/{{userId}}" *ngIf="role"
     > 
       <mat-icon > shopping_cart</mat-icon>
     </button>
@@ -38,8 +38,8 @@
   <mat-menu #menu="matMenu"  >
     <div>
       <button *ngIf="role" mat-menu-item  (click)="logout()">Logout</button>
-      <button *ngIf="role" mat-menu-item routerLink="/change_password">Change Password</button>
-      <button  *ngIf="role" mat-menu-item routerLink="/checkout">CheckOut</button>
+      <button *ngIf="role" mat-menu-item routerLink="/lazy/change_password">Change Password</button>
+      <button  *ngIf="role" mat-menu-item routerLink="/lazy/checkout">CheckOut</button>
       <button *ngIf="!role" mat-menu-item routerLink="/create-account">Sign up</button>
   
     </div>
@@ -48,7 +48,7 @@
   mat-icon-button
   class="example-icon"
   aria-label="Example icon-button with share icon"
-  routerLink="/getUsers"
+  routerLink="/lazy/getUsers"
 > 
   <mat-icon *ngIf="show">accessibility</mat-icon>
 </button>
@@ -57,7 +57,7 @@
 mat-icon-button
 class="example-icon"
 aria-label="Example icon-button with share icon"
-routerLink="/getProducts"
+routerLink="/lazy/getProducts"
 > 
 <mat-icon *ngIf="show">shop</mat-icon>
 </button>

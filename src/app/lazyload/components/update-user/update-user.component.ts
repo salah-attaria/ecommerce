@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConnectionService } from 'src/app/services/connection.service';
-import { SnackbarService } from '../../services/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-update-user',

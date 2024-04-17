@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ConnectionService } from '../../services/connection.service';
+import { ConnectionService } from '../../../services/connection.service';
 
 @Component({
   selector: 'app-admin-delt-dialoge',

@@ -27,6 +27,7 @@ export class LoginComponent {
     private snack: SnackbarService
   ) {}
   ngOnInit(): void {
+    
     // this.router.navigateByUrl('/home')
   }
 
@@ -40,7 +41,7 @@ export class LoginComponent {
         this.response = resp;
         if (this.response.accessToken) {
           this.auth.setToken(this.response.accessToken);
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/lazy/home');
           this.snack.openSnackBar('Welcom to the shop', 'Success');
         } else {
           
@@ -65,4 +66,5 @@ export class LoginComponent {
       console.error('Token not found');
     }
   }
+ 
 }

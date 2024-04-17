@@ -3,49 +3,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { HomeComponent } from './components/home/home.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { CheckoutComponent } from './components/checkout/checkout.component';
-import { CartComponent } from './components/cart/cart.component';
 import { MatTableModule } from '@angular/material/table';
-import { SignupComponent } from './components/signup/signup.component';
+import { SignupComponent } from './signup/signup.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { OrderDialogeComponent } from './components/order-dialoge/order-dialoge.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TestComponent } from './test/test.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { JwtModule } from '@auth0/angular-jwt';
-import { GetUsersComponent } from './components/get-users/get-users.component';
-import { UsersDetailComponent } from './components/users-detail/users-detail.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { UpdateUserComponent } from './components/update-user/update-user.component';
-import { AdminDeltDialogeComponent } from './components/admin-delt-dialoge/admin-delt-dialoge.component';
-import { AddProductComponent } from './components/add-product/add-product.component';
-import { AllProductsComponent } from './components/all-products/all-products.component';
-import { DeltProductDialogComponent } from './components/delt-product-dialog/delt-product-dialog.component';
-import { UpdateProductComponent } from './components/update-product/update-product.component';
-import { AddAdminComponent } from './components/add-admin/add-admin.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
-import { AccountPasswordComponent } from './components/account-password/account-password.component';
-import {MatStepperModule} from '@angular/material/stepper';
-import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { LazyloadModule } from './lazyload/lazyload.module';
+import { LazyloadRoutingModule } from './lazyload/lazyload-routing.module';
 
 @NgModule({
   declarations: [
@@ -53,26 +39,10 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    HomeComponent,
-    ProductDetailComponent,
-    CheckoutComponent,
-    CartComponent,
     SignupComponent,
-    OrderDialogeComponent,
     NotFoundComponent,
     TestComponent,
-    GetUsersComponent,
-    UsersDetailComponent,
-    UpdateUserComponent,
-    AdminDeltDialogeComponent,
-    AddProductComponent,
-    AllProductsComponent,
-    DeltProductDialogComponent,
-    UpdateProductComponent,
-    AddAdminComponent,
     SnackbarComponent,
-    AccountPasswordComponent,
-    ForgetPasswordComponent,
     ResetPasswordComponent,
   ],
   imports: [
@@ -93,8 +63,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     HttpClientModule,
     ReactiveFormsModule,
     MatRadioModule,
-    MatSnackBarModule, 
-    MatStepperModule,
+    MatSnackBarModule,
+    MatStepperModule,LazyloadRoutingModule,LazyloadModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -110,7 +80,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
         ], // adjust this based on your backend paths
       },
     }),
-    MatPaginatorModule,MatSortModule
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

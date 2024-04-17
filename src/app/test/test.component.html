@@ -1,9 +1,35 @@
-<!-- <p>{{data|json}}</p> -->
-<h1>TEST</h1>
-
-<div>
-    <!-- File upload input -->
+<!-- <mat-form-field>
+    <mat-label>Input</mat-label>
+    <input matInput>
+  </mat-form-field> -->
+  <div class="container">
+   
+    <div class="form-div">
+      <h2 class="text-center"><strong i18n >Test Form</strong></h2>
+      <form class="login_form" [formGroup]="testForm">
+        <mat-form-field appearance="outline" class="my-inputs">
+          <mat-label i18n>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+          <mat-error i18n *ngIf="testForm.hasError('required','email')">Email is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="my-inputs">
+          <mat-label i18n>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error i18n *ngIf="testForm.hasError('required','password')">Password is required</mat-error>
+  
+        </mat-form-field>
+     
+        <button mat-button i18n >Login</button>
+      </form>
+      <div class="smart-div">
+        <a routerLink="/create-account" i18n>Create account</a>
+        <a routerLink="/forget_password" i18n>Forgot password?</a>
+      </div>
+    </div>
+  </div>
+  
+<!-- File upload input
     <input type="file" name="file" (change)="handleFileInput($event)">
     <button (click)="uploadFile()">Upload</button>
-  </div>
-  <!-- <img src="/nodeBackend/uploads/{{image}}"> -->
+  </div> -->
+<!-- <img src="/nodeBackend/uploads/{{image}}"> -->

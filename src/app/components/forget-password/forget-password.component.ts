@@ -28,6 +28,9 @@ export class ForgetPasswordComponent {
     // private router:Router
   ) {}
   ngOnInit(): void {}
+  goBack(){
+    window.history.back()
+  }
   verify_email() {
     let data = this.forget_password_form.value;
     if (this.forget_password_form.valid) {

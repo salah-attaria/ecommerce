@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { VerifyPasswordResponse } from '../components/account-password/verify_password';
+import { VerifyPasswordResponse } from '../lazyload/components/account-password/verify_password';
 import { verifyTokenResponse } from '../components/reset-password/verify-token';
 import { verifyEmailResponse } from '../components/forget-password/verify_email';
 
