@@ -32,6 +32,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { LazyloadModule } from './lazyload/lazyload.module';
 import { LazyloadRoutingModule } from './lazyload/lazyload-routing.module';
+import { TranslateModuleModule } from './translate-module.module';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,10 @@ import { LazyloadRoutingModule } from './lazyload/lazyload-routing.module';
     ReactiveFormsModule,
     MatRadioModule,
     MatSnackBarModule,
-    MatStepperModule,LazyloadRoutingModule,LazyloadModule,
+    MatStepperModule,
+    LazyloadRoutingModule,
+    LazyloadModule,
+    TranslateModuleModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

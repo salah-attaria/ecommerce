@@ -8,22 +8,46 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
+import {TranslateService} from '@ngx-translate/core'
+import { TranslateModuleModule } from '../translate-module.module';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css'],
 })
-export class TestComponent {
+export class TestComponent{
   // [x: string]: FileList;
   fileToUpload: File | null = null;
-
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  switchLang:any;
   testForm: FormGroup = this.fb.group({
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
+  browserLang:any;
+  constructor(private http: HttpClient, private fb: FormBuilder,  private connect:ConnectionService,private translate:TranslateService
+  ) {
+    this.connect.selectedlang.subscribe((resp)=>{
+      this.switchLang=resp
+    })}
+    
+  ngOnInit():void{
+this.translate.addLangs(['de','en'])
 
+
+this.translate.setDefaultLang('en');
+// this.translate.use('en')
+// this.browserLang=this.translate.getDefaultLang();
+// debugger
+// this.languageChanged();
+// this.connect.selectedlang.next(this.browserLang)
+  }
+  selectedLang(lang:any){
+     
+    this.translate.use(lang)
+   }
+languageChanged(){
+  this.translate.use(this.browserLang.match( /de|en/ ) ? this.browserLang :'en')
+}
   //   handleFileInput(event: Event) {
   //     const inputElement = event.target as HTMLInputElement;
   //     const files = inputElement.files;

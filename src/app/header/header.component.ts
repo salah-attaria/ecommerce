@@ -23,7 +23,10 @@ export class HeaderComponent implements OnInit {
     private auth: AuthService,
     public router: Router,
     private jwt: JwtHelperService,
-  ) {}
+    private connect:ConnectionService
+  ) {
+   
+  }
   ngOnInit() {
     this.refreshHeader();
     this.router.events.subscribe((event) => {
@@ -55,4 +58,5 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/');
     this.role = null;
   }
+ 
 }

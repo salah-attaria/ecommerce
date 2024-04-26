@@ -51,7 +51,7 @@ export class LoginComponent {
         }
       });
     } else {
-      this.snack.openSnackBar('Invalid credentials', 'Warning');
+      this.snack.openSnackBar('Invalid form.Please fill the required fields.', 'Warning');
 
     }
   }

@@ -44,7 +44,7 @@ export class AddAdminComponent {
           this.register = true;
 
           setTimeout(() => {
-            this.route.navigateByUrl('/getUsers');
+            this.route.navigateByUrl('/lazy/getUsers');
           }, 3000);
           // alert('Registered successfully');
         },

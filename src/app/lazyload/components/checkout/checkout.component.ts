@@ -3,7 +3,12 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { OrderDialogeComponent } from '../order-dialoge/order-dialoge.component';
 import { ConnectionService } from '../../../services/connection.service';
 import { map, of } from 'rxjs';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -19,29 +24,31 @@ export class CheckoutComponent {
   itemId: any;
   description: any;
   checkoutForm: FormGroup = this.fb.group({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    username: new FormControl(''),
-    email: new FormControl(''),
-    address: new FormControl(''),
-    address2: new FormControl(''),
-    country: new FormControl(''),
-    state: new FormControl(''),
-    zip: new FormControl(''),
-    payment: new FormControl(''),
-    creditName: new FormControl(''),
-    creditCardNumber: new FormControl(''),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    address2: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
+    state: new FormControl('', Validators.required),
+    zip: new FormControl('', Validators.required),
+    payment: new FormControl('', Validators.required),
+    creditName: new FormControl('', Validators.required),
+    creditCardNumber: new FormControl('', Validators.required),
+    product_quantity_price: new FormControl(''),
   });
   id: any;
-  message:boolean=false;
-  errorMsg:boolean=false;
+  message: boolean = false;
+  errorMsg: boolean = false;
+  body: any;
   constructor(
-    public router:Router,
+    public router: Router,
     public dialog: MatDialog,
     private connect: ConnectionService,
     private fb: FormBuilder,
-    private jwt:JwtHelperService,
-    private snack:SnackbarService
+    private jwt: JwtHelperService,
+    private snack: SnackbarService
   ) {}
   ngOnInit(): void {
     let token: any = localStorage.getItem('token');
@@ -62,10 +69,23 @@ export class CheckoutComponent {
           total: item.quantity * item.price,
         };
       });
+      this.body = resp
+        .map((item: any) => {
+          return item.name + '_' + item.quantity + '_ $' + item.price;
+        })
+        .join(', ');
       if (Array.isArray(this.data) && this.data.length > 0) {
         const total = this.data.reduce((total: number, currentItem: any) => {
           return total + this.item.total;
         }, 0);
+      } else {
+        this.snack.openSnackBar(
+          'Please add some products in your cart',
+          'Warning'
+        );
+        setTimeout(() => {
+          this.router.navigateByUrl('/lazy/home');
+        }, 2000);
       }
     });
   }
@@ -73,29 +93,29 @@ export class CheckoutComponent {
     return this.data.reduce((total: any, item: any) => total + item.total, 0);
   }
   placeOrder() {
+    this.checkoutForm.controls['product_quantity_price'].setValue(this.body);
     let data = this.checkoutForm.value;
-    if(this.checkoutForm.valid){
+
+    console.log(data);
+
+    if (this.checkoutForm.valid) {
       const dialogRef = this.dialog.open(OrderDialogeComponent, {
         height: '300px',
         width: '500px',
       });
       dialogRef.afterClosed().subscribe((resp) => {
         if (resp == 'ok') {
-          // let data =this.checkoutForm.value
           this.connect.postBillingData(data).subscribe((resp: any) => {
             console.log('billing details added' + resp);
-            let userId=this.id;
+            let userId = this.id;
             this.connect.deleteCartItem(userId).subscribe({
               next: () => {
                 console.log('Cart cleared successfully');
-                // this.message=true;
-                this.snack.openSnackBar('Order Has Been Placed','Info')
+                this.snack.openSnackBar('Order Has Been Placed', 'Info');
+                this.checkoutForm.reset();
                 setTimeout(() => {
-                  this.router.navigateByUrl('/home')
+                  this.router.navigateByUrl('/lazy/home');
                 }, 3000);
-               
-               
-                
               },
               error: (error) => {
                 console.log(error);
@@ -106,21 +126,11 @@ export class CheckoutComponent {
           // alert('order placed');
         } else {
           alert('order has been cancelled');
-
         }
       });
-    }else{
-      console.log('invalid')
-      this.snack.openSnackBar('Please Enter The Required Fields','Warning')
-      // this.errorMsg=true;
-
-
+    } else {
+      console.log('invalid');
+      this.snack.openSnackBar('Please Enter The Required Fields', 'Warning');
     }
-
-    // this.connect.postBillingData(data).subscribe((resp:any)=>{
-    //   console.log(resp)
-    // })
-    // console.log(data)
-   
   }
 }

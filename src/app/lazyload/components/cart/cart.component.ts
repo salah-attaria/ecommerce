@@ -71,7 +71,7 @@ export class CartComponent {
       } else {
         this.snack.openSnackBar('Cart is empty', 'Info');
         setTimeout(() => {
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/lazy/home');
         }, 2000);
         // alert('cart is empty')
       }

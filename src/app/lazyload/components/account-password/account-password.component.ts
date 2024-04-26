@@ -91,7 +91,7 @@ export class AccountPasswordComponent {
           this.snack.openSnackBar('Password has been changed', 'Info');
         });
         setTimeout(() => {
-        this.router.navigateByUrl('/getUsers')
+        this.router.navigateByUrl('/lazy/getUsers')
           
         }, 2000);
 

@@ -75,7 +75,7 @@ export class UpdateProductComponent {
         this.snack.openSnackBar('Product has been updated','Success')
 
       setTimeout(() => {
-        this.route.navigateByUrl('/getProducts')
+        this.route.navigateByUrl('/lazy/getProducts')
       },3000);
       }
       ,

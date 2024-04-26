@@ -62,7 +62,7 @@ export class UpdateUserComponent {
           console.log('updated successfully');
         this.snack.openSnackBar('User updated','Info')
           setTimeout(() => {
-            this.route.navigateByUrl('/getUsers');
+            this.route.navigateByUrl('/lazy/getUsers');
           }, 3000);
         }
         ,

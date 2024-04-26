@@ -1,0 +1,12 @@
+{
+    "test":{
+        "text":"Testformular",
+        "email":"E-Mail",
+        "email_error":"E-Mail ist erforderlich",
+        "password":"Passwort",
+        "password_error":"Passwort wird benötigt",
+        "login":"Anmeldung",
+        "createAccount":"Benutzerkonto erstellen",
+        "forgetPassword":"Passwort vergessen?"
+    }
+}

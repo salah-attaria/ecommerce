@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { VerifyPasswordResponse } from '../lazyload/components/account-password/verify_password';
 import { verifyTokenResponse } from '../components/reset-password/verify-token';
 import { verifyEmailResponse } from '../components/forget-password/verify_email';
@@ -12,7 +12,7 @@ export class ConnectionService {
   url = 'http://localhost:4800/';
 
   constructor(private http: HttpClient) {}
- 
+ selectedlang=new BehaviorSubject('en')
   getData() {
     return this.http.get(this.url + 'getData');
   }

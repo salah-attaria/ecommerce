@@ -4,26 +4,31 @@
   </mat-form-field> -->
   <div class="container">
    
+   
     <div class="form-div">
-      <h2 class="text-center"><strong i18n >Test Form</strong></h2>
+      <div>
+        <a  [class.active]="switchLang=='de'" (click)="selectedLang('de')"> DE</a>
+        <a  [class.active]="switchLang=='en'" (click)="selectedLang('en')"> EN  </a>
+      </div>
+      <h2 class="text-center"><strong  >{{ 'test.text' | translate}}</strong></h2>
       <form class="login_form" [formGroup]="testForm">
         <mat-form-field appearance="outline" class="my-inputs">
-          <mat-label i18n>Email</mat-label>
+          <mat-label >{{ 'test.email' | translate}}</mat-label>
           <input matInput type="email" formControlName="email" />
-          <mat-error i18n *ngIf="testForm.hasError('required','email')">Email is required</mat-error>
+          <mat-error  *ngIf="testForm.hasError('required','email')">{{ 'test.email_error' | translate}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="my-inputs">
-          <mat-label i18n>Password</mat-label>
+          <mat-label >{{ 'test.password' | translate}}</mat-label>
           <input matInput type="password" formControlName="password" />
-          <mat-error i18n *ngIf="testForm.hasError('required','password')">Password is required</mat-error>
+          <mat-error  *ngIf="testForm.hasError('required','password')">{{ 'test.password_error' | translate}}</mat-error>
   
         </mat-form-field>
      
-        <button mat-button i18n >Login</button>
+        <button mat-button  >{{ 'test.login' | translate}}</button>
       </form>
       <div class="smart-div">
-        <a routerLink="/create-account" i18n>Create account</a>
-        <a routerLink="/forget_password" i18n>Forgot password?</a>
+        <a routerLink="/create-account" >{{ 'test.createAccount' | translate}}</a>
+        <a routerLink="/forget_password" >{{ 'test.forgetPassword' | translate}}</a>
       </div>
     </div>
   </div>
