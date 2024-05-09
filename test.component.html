@@ -1,0 +1,70 @@
+<!-- <mat-form-field>
+    <mat-label>Input</mat-label>
+    <input matInput>
+  </mat-form-field> -->
+<div class="container">
+  <div class="form-div">
+    <div>
+      <a [class.active]="switchLang == 'de'" (click)="selectedLang('de')">
+        DE</a
+      >
+      <a [class.active]="switchLang == 'en'" (click)="selectedLang('en')">
+        EN
+      </a>
+    </div>
+    <h2 class="text-center">
+      <strong>{{ "test.text" | translate }}</strong>
+    </h2>
+    <form class="login_form" [formGroup]="testForm">
+      <!-- <mat-form-field appearance="outline" class="my-inputs">
+          <mat-label >{{ 'test.email' | translate}}</mat-label>
+          <input matInput type="email" formControlName="email" />
+          <mat-error  *ngIf="testForm.hasError('required','email')">{{ 'test.email_error' | translate}}</mat-error>
+        </mat-form-field>-->
+
+      <input
+        type="file"
+        #fileInput
+        name="file"
+        formControlName="file"
+        (change)="onFileSellected($event)"
+        class="my-2"
+      />
+      <mat-form-field appearance="outline" class="my-inputs">
+        <mat-label>{{"test.description" | translate}}</mat-label>
+        <input matInput type="text" formControlName="description" />
+        <mat-error *ngIf="testForm.hasError('required', 'description')"
+          >{{"test.descriptionRequired" | translate}}</mat-error
+        >
+      </mat-form-field>
+      <button (click)="upload()" class="btn btn-primary">{{"test.uploadFile" | translate}}</button>
+
+      <!-- <button mat-button  >{{ 'test.login' | translate}}</button> -->
+    </form>
+    <!-- <div class="smart-div">
+      <a routerLink="/create-account">{{ "test.createAccount" | translate }}</a>
+      <a routerLink="/forget_password">{{
+        "test.forgetPassword" | translate
+      }}</a>
+    </div> -->
+    <div class="my-3">
+      <button class="btn btn-primary" (click)="getVideo()">{{"test.getVideo" | translate}}</button>
+      <div *ngFor="let videoUrl of videoUrls; let i = index">
+        <video controls height="300px" width="300px">
+          <source
+            [src]="'http://localhost:4800/uploads/' + videoUrl"
+            type="video/mp4"
+          />
+        </video>
+        <p><i>{{ videoDescription[i] | translate }}</i></p>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<!-- File upload input
+    <input type="file" name="file" (change)="handleFileInput($event)">
+    <button (click)="uploadFile()">Upload</button>
+  </div> -->
+<!-- <img src="/nodeBackend/uploads/{{image}}"> -->

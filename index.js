@@ -10,6 +10,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('./db/users');
 const order = require('./db/order');
+const video=require('./db/videosUploaded')
+
 const cors = require('cors');
 const multer = require('multer');
 const order_detail = require('./db/order_detail');
@@ -51,6 +53,22 @@ app.get("/getData", async (req, res) => {
     }
 
 })
+app.post('/uploadVideo',upload.single('file'),async(req,res)=>{
+    console.log(req.file)
+    let data=new video({
+        videoName:req.file.originalname,
+        userId:req.body.userId,
+        description:req.body.description
+    });
+    console.log(data)
+    let result=await data.save();
+    res.send(result)
+})
+app.get('/uploadVideo/:id',async(req,res)=>{
+    let data=await video.find({userId:req.params.id})
+    if(data)
+    res.send(data)
+})
 app.get("/getData/:id", async (req, res) => {
     console.log(req.params.id)
     // const productList = new mongoose.model("products", productSchema)
@@ -71,7 +89,7 @@ app.post('/register', async (req, res) => {
         res.send(await result)
         console.log(result)
     } else {
-        req.send('User already exists')
+        res.send('User already exists')
     }
 
 })
@@ -94,7 +112,7 @@ app.post('/login', async (req, res) => {
 
         const token = jwt.sign({ id: user._id, role: user.role }, authconfig.secret, {
             algorithm: 'HS256',
-            expiresIn: '20m' // Token expires in 30 minutes
+            expiresIn: '20m' // Token expires in 20 minutes
         });
 
         res.send({
@@ -176,11 +194,12 @@ app.post('/postBillingData', async (req, res) => {
                 payment: req.body.payment,
                 creditName: req.body.creditName,
                 creditCardNumber: req.body.creditCardNumber,
+                product_quantity_price: req.body.product_quantity_price
 
 
             }
         })
-        console.log('data updated');
+        console.log(req.body);
         res.send(data);
     } else {
         console.log(req.body)
@@ -317,7 +336,7 @@ app.post('/forget_password', async (req, res) => {
     console.log(req.body);
     let user = await User.findOne({ email: req.body.email })
     if (!user) {
-        res.status(404).send({'message':false})
+        res.status(404).send({ 'message': false })
     } else {
         try {
 
@@ -386,23 +405,11 @@ app.post('/verify_token', async (req, res) => {
     }
 
 })
-
-// ` <html>
-//             <body>
-//                 <h1>Reset Your Password</h1>
-//                 <form action="/reset-password" method="post">
-//                     <input type="hidden" name="token" value="${token}">
-//                     <label for="password">New Password:</label>
-//                     <input type="password" id="password" name="password" required>
-//                     <button type="submit">Reset Password</button>
-//                 </form>
-//             </body>
-//             </html>`
-
-app.listen(4800, (err) => {
+const port = 4800;
+app.listen(port, (err) => {
     if (err) {
         console.log(err)
     } else {
-        console.log('Server running on port 4800')
+        console.log(`Server running on port ${port}`)
     }
 })
