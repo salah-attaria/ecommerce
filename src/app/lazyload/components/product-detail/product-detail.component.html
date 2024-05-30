@@ -17,12 +17,12 @@
     </div>
     <div class="col-md-6">
       <div class="h-100 p-5 bg-body-secondary border rounded-3">
-        <h2>{{ data[0].name }}</h2>
-        <strong
+        <h2 class="color-fav">{{ data[0].name }}</h2>
+        <strong class="color-fav"
           >Price: <span>${{ data[0].price }}</span>
         </strong>
 
-        <p>
+        <p class="color-fav">
           {{ data[0].description }}
         </p>
         <form>
@@ -45,7 +45,7 @@
           </div>
           <button
             mat-button
-            class="btn-cart"
+            class="btn-cart bgcolor-fav"
             type="button"
             (click)="addToCart()"
           >

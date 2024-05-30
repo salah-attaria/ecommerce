@@ -7,6 +7,10 @@
         "password_error":"Passwort wird benötigt",
         "login":"Anmeldung",
         "createAccount":"Benutzerkonto erstellen",
-        "forgetPassword":"Passwort vergessen?"
+        "forgetPassword":"Passwort vergessen?",
+        "description":"Descripción",
+        "descriptionRequired":"Descripción requerida",
+        "uploadFile":"Subir archivo",
+        "getVideo":"Obtener vídeo"
     }
 }

@@ -7,6 +7,10 @@
         "password_error":"Password is required",
         "login":"Login",
         "createAccount":"Create account",
-        "forgetPassword":"Forgot password?"
+        "forgetPassword":"Forgot password?",
+        "description":"Description",
+        "descriptionRequired":"Description required",
+        "uploadFile":"Upload file",
+        "getVideo":"Get video"
     }
 }

@@ -78,6 +78,12 @@ export class ConnectionService {
   reset_password(body:any){
     return this.http.post(this.url+'verify_token',body)
   }
+  uploadVideo(body:any){
+    return this.http.post(this.url+'uploadVideo',body)
+  }
+  getVideo(id:any){
+    return this.http.get(this.url+'uploadVideo/'+id)
+  }
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error occurred';
     if (error.error instanceof ErrorEvent) {

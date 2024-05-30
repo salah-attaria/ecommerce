@@ -1,3 +1,7 @@
+/* body{
+    background-image: url(../../assets/PICTURES/greish.jpg) !important;
+
+} */
 .login_form{
     /* width: 600px; */
 }
@@ -31,3 +35,7 @@ a{
     text-decoration: none;
     margin: 6px 0;
 }
+/* .bgcon{
+    background-image: url(../../assets/PICTURES/minimal-desktop-background-white-abstract-design-vector_53876-135921.avif);
+
+} */

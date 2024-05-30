@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnectionService } from '../services/connection.service';
-import { toArray } from 'rxjs';
+import { toArray, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import {
   FormBuilder,
@@ -8,46 +8,101 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {TranslateService} from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core';
 import { TranslateModuleModule } from '../translate-module.module';
+import { jwtDecode } from 'jwt-decode';
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css'],
 })
-export class TestComponent{
+export class TestComponent {
   // [x: string]: FileList;
-  fileToUpload: File | null = null;
-  switchLang:any;
+  fileToUpload: any;
+  switchLang: any;
   testForm: FormGroup = this.fb.group({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    userId: new FormControl('', Validators.required),
+    file: new FormControl(null, Validators.required),
   });
-  browserLang:any;
-  constructor(private http: HttpClient, private fb: FormBuilder,  private connect:ConnectionService,private translate:TranslateService
+  browserLang: any;
+  file: any;
+  id: any;
+  videoUrls: string[] = [];
+  videoUrl: any;
+  videoDescription: string[] = [];
+  constructor(
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private connect: ConnectionService,
+    private translate: TranslateService,
+    private jwt: JwtHelperService
   ) {
-    this.connect.selectedlang.subscribe((resp)=>{
-      this.switchLang=resp
-    })}
-    
-  ngOnInit():void{
-this.translate.addLangs(['de','en'])
-
-
-this.translate.setDefaultLang('en');
-// this.translate.use('en')
-// this.browserLang=this.translate.getDefaultLang();
-// debugger
-// this.languageChanged();
-// this.connect.selectedlang.next(this.browserLang)
+    this.connect.selectedlang.subscribe((resp) => {
+      this.switchLang = resp;
+    });
   }
-  selectedLang(lang:any){
-     
-    this.translate.use(lang)
-   }
-languageChanged(){
-  this.translate.use(this.browserLang.match( /de|en/ ) ? this.browserLang :'en')
-}
+
+  ngOnInit(): void {
+    this.translate.addLangs(['de', 'en']);
+
+    this.translate.setDefaultLang('en');
+    let token: any = localStorage.getItem('token');
+    let decodedToken = this.jwt.decodeToken(token);
+    this.id = decodedToken.id;
+    console.log(this.id);
+
+    // this.translate.use('en')
+    // this.browserLang=this.translate.getDefaultLang();
+    // debugger
+    // this.languageChanged();
+    // this.connect.selectedlang.next(this.browserLang)
+  }
+  selectedLang(lang: any) {
+    this.translate.use(lang);
+  }
+  languageChanged() {
+    this.translate.use(
+      this.browserLang.match(/de|en/) ? this.browserLang : 'en'
+    );
+  }
+  onFileSellected(event: any) {
+    const selectedFile = event.target.files[0];
+    console.log(selectedFile);
+    this.fileToUpload = selectedFile;
+
+    // const files = (event.target as HTMLInputElement).files;
+    // this.file = files;
+    if (this.fileToUpload) {
+      this.testForm.controls['file'].setValue(this.fileToUpload);
+    }
+  }
+  upload() {
+    console.log('File to upload:', this.fileToUpload);
+
+    if (!this.fileToUpload) {
+      console.error('No file selected');
+      return;
+    }
+    const testData = this.testForm.value;
+    const formData: FormData = new FormData();
+    formData.append('userId', this.id);
+    formData.append('description', testData.description);
+    formData.append('file', this.fileToUpload);
+    console.log('FormData:', formData);
+    this.connect.uploadVideo(formData).subscribe((res) => {
+      console.log(res);
+    });
+  }
+  getVideo() {
+    this.connect.getVideo(this.id).subscribe((resp: any) => {
+      console.log(resp);
+      this.videoUrls = resp.map((video: any) => video.videoName);
+      this.videoDescription=resp.map((video:any)=>video.description)
+    });
+    console.log(this.videoUrls);
+  }
   //   handleFileInput(event: Event) {
   //     const inputElement = event.target as HTMLInputElement;
   //     const files = inputElement.files;

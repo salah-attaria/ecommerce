@@ -7,7 +7,7 @@ Registered successfully
     <div *ngIf="error" class="alert alert-danger" role="alert">
       The email you provided is alredy registered
     </div>
-    <h2 class="text-center"><strong>Create Account</strong></h2>
+    <h2 class="text-center"><strong class="color-fav">Create Account</strong></h2>
     <form class="login_form" [formGroup]="signupForm">
       <mat-form-field appearance="outline" class="my-inputs">
         <mat-label>First Name</mat-label>
@@ -65,7 +65,10 @@ Registered successfully
           ><span class="">User</span>
         </mat-radio-button>
       </mat-radio-group> -->
-      <button mat-button (click)="signUp()">Sign Up</button>
+      <div class="d-flex justify-content-center align-item-center">
+        <button mat-button (click)="signUp()" style="background-color:#456879 ;color: white;border-radius: 5px; width: 100%;">Sign Up</button>
+
+      </div>
     </form>
     <div class="smart-div my-2">
       <span>Already have an account?</span>

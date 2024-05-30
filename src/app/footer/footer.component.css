@@ -2,3 +2,10 @@ mat-toolbar {
     background-color: #3F51B5;
     color: white;
   }
+  .nav-link{
+    color: #456879 !important;
+  }
+  .nav-p{
+    color: #456879 !important;
+
+  }

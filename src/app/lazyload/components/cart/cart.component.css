@@ -1,5 +1,9 @@
-.btn-check{
+/* .btn-check{
     /* width:100%; */
-    background-color: #3D4EAE;
-    color: white !important;
+    /* background-color: #3D4EAE; */
+    /* color: white !important; */
+/* } */ */
+.hover_btn:hover{
+    background-color: #456879 !important;
+    color:#F8F9FA !important;
 }

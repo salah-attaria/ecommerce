@@ -1,5 +1,5 @@
-.btn-checkout{
-    background-color: #3F51B5;
-    color: white !important;
-
+.btn-checkout {
+  color: white !important;
+  background-color: #456879;
+  border-radius: 8px;
 }

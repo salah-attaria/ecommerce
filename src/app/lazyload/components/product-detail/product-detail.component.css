@@ -35,3 +35,10 @@
   left: 0;
   right: 0;
 }
+.color-fav{
+  color:#456879;
+}
+.bgcolor-fav{
+  background-color:#456879 ;
+  border-radius: 8px;
+}

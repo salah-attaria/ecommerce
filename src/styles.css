@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 .mat-mdc-snack-bar-container {
     &.red-snackbar {
       --mdc-snackbar-container-color: #e60000!important;
@@ -30,3 +31,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       --mdc-snackbar-supporting-text-color: white !important;
     }
   }
+  .color-fav{
+    color:#456879;
+  }
+  .bgcolor-fav{
+    background-color:#456879 ;
+    border-radius: 8px;
+  }
+  body{
+    background-image: url(../src/assets/PICTURES/white.avif);
+height: 100%;
+width: 100%;
+  opacity: 1;
+  /* background-color:rgb(238, 236, 236); */
+  /* filter: blur(2px); */
+/* overflow: hidden;
+z-index: -1; */
+
+  
+}

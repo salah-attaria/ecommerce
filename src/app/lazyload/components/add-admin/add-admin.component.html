@@ -7,7 +7,7 @@
         <div *ngIf="error" class="alert alert-danger" role="alert">
           The email you provided is alredy registered
         </div>
-        <h2 class="text-center"><strong>Create Admin Account</strong></h2>
+        <h2 class="text-center"><strong class="color-fav">Create Admin Account</strong></h2>
         <form class="login_form" [formGroup]="signupForm">
           <mat-form-field appearance="outline" class="my-inputs">
             <mat-label>First Name</mat-label>
@@ -54,7 +54,7 @@
               ><span class="">User</span>
             </mat-radio-button>
           </mat-radio-group> -->
-          <button mat-button (click)="signUp()">Create Admin</button>
+          <button mat-button (click)="signUp()" style="background-color: #456879; color: white; border-radius: 8px;">Create Admin</button>
         </form>
         <div class="smart-div my-2">
           <!-- <span></span> -->
